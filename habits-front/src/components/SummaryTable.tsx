@@ -4,7 +4,7 @@ import { HabitDay } from "./HabitDay"
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 const dates = generateRange()
 export function SummaryTable() {
-console.log(dates)
+    console.log(dates)
     return (
         <div className='w-full flex'>
             <div className='grid grid-rows-7 grid-flow-row gap-3'>
@@ -22,7 +22,10 @@ console.log(dates)
                 {dates.map((date, i) => {
                     return (
                         <div key={i}>
-                            <HabitDay past={date.past}/>
+                            <HabitDay
+                                past={date.past}
+                                amount={5}
+                                completed={Math.round(Math.random() * 5)} />
                         </div>
                     )
                 })}
