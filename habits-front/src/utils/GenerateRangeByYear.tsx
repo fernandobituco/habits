@@ -10,12 +10,12 @@ export function generateRange() {
     let compareDate = yearStart
 
     while (compareDate.isBefore(today)) {
-        dates.push({"date": compareDate.toDate, "past": true})
+        dates.push({"date": compareDate.toDate(), "past": true})
         compareDate = compareDate.add(1, 'day')
     }
 
     while (dates.length < minimum) {
-        dates.push({"date": compareDate.toDate, "past": false})
+        dates.push({"date": compareDate.toDate(), "past": false})
         compareDate = compareDate.add(1, 'day')
     }
 
