@@ -1,11 +1,11 @@
 import { View, Text, ScrollView, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { HabitDay } from "../components/HabitDay";
 import { Header } from "../components/Header";
 import { DAY_SIZE } from "../components/HabitDay";
 import { generateRange } from "../utils/GenerateRangeByYear";
 import { api } from "../lib/axios";
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import { Loading } from "../components/Loading";
 import dayjs from "dayjs";
 
@@ -39,9 +39,9 @@ export function Home() {
         }
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         fetchData()
-    }, [])
+    }, []))
 
     if (loading) {
         return (
@@ -75,7 +75,7 @@ export function Home() {
                                 key={`${date.date.toISOString()}-${i}`}
                                 date={date.date}
                                 completed={dayWithHabits?.completed}
-                                amount={dayWithHabits?.completed}
+                                amount={dayWithHabits?.amount}
                                 past={date.past}
                                 onPress={() => navigate('habit', { date: date.date.toISOString() })}
                             />

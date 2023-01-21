@@ -1,3 +1,3 @@
 export function GenerateProgress(total: number, completed: number) {
-    return Math.round((total / completed) * 100)
+    return Math.round((completed / total) * 100)
 }

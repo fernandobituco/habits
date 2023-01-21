@@ -45,7 +45,6 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         let completedHabits: string[] = habits!.completedHabits
         const isHabitChecked = completedHabits.includes(habitId)
 
-        console.log(id, date.toISOString())
         await api.patch('habits', {
             id: habitId,
             date: date.toISOString()
@@ -63,7 +62,7 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         setCompleted(completedHabits.length)
     }
 
-    let completedPercentage = amount > 0 ? Math.round((completed / amount) * 100) : 0
+    const [completedPercentage, setCompletedPercentage] = useState(amount > 0 ? Math.round((completed / amount) * 100) : 0)
     let pastStyle = {
         opacity: `1`
     }
@@ -71,7 +70,7 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         pastStyle = {
             opacity: `0.4`
         }
-        completedPercentage = 0
+        setCompletedPercentage(0)
     }
 
     return (

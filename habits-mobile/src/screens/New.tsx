@@ -25,8 +25,7 @@ export function New() {
     async function creatHabit() {
         try {
             if(!title.trim()) {
-                Alert.alert('Digite o nome do hábito')
-                return
+                return Alert.alert('Digite o nome do hábito')
             }
             if(weekDays.length == 0) {
                 Alert.alert('Defina a ocorrência')
