@@ -30,6 +30,8 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
     const isToday = dayjs().startOf('day').isSame(date)
     const [completed, setCompleted] = useState(defaultCompleted)
 
+    const completedPercentage = (amount > 0 && past)? Math.round((completed / amount) * 100) : 0
+
     async function getHabits() {
         await api.get('day', {
             params: {
@@ -61,8 +63,7 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         })
         setCompleted(completedHabits.length)
     }
-
-    const [completedPercentage, setCompletedPercentage] = useState(amount > 0 ? Math.round((completed / amount) * 100) : 0)
+    
     let pastStyle = {
         opacity: `1`
     }
@@ -70,7 +71,6 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         pastStyle = {
             opacity: `0.4`
         }
-        setCompletedPercentage(0)
     }
 
     return (
@@ -85,7 +85,8 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
                     'bg-violet-600 border-violet-400': completedPercentage >= 80,
                     'border-green-400': isToday
                 })}
-                style={pastStyle} />
+                style={pastStyle}
+            />
             <Popover.Portal>
                 <Popover.Content className='min-w-[320px] w-full p-6 rounded-2xl bg-zinc-900 flex flex-col'>
                     <span className='font-semibold text-zinc-400'>{dayjs(date).format('dddd')}</span>
@@ -101,7 +102,8 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
                                     checked={habits.completedHabits.includes(habit.id)}
                                     onCheckedChange={() => {
                                         toggleHabit(habit.id)
-                                    }}>
+                                    }}
+                                    >
                                     <div
                                         className='
                                 h-8 w-8 bg-zinc-900 border-2 border-zinc-700
