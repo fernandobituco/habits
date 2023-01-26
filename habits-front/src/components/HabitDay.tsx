@@ -40,7 +40,6 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
         }).then(response => {
             setHabits(response.data)
         })
-
     }
 
     async function toggleHabit(habitId: string) {

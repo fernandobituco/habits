@@ -39,7 +39,14 @@ export async function appRoutes(app: FastifyInstance) {
                 }
             }
         })
-        return habits
+        habits.forEach(habit => habit.habitWeekDays.map(habitWeekDays => (habitWeekDays.week_day)))
+        const habitsModified = habits.map(habit => ({
+            id: habit.id,
+            title: habit.title,
+            created_at: habit.created_at,
+            habitWeekDays: habit.habitWeekDays.map(habitWeekDay => (habitWeekDay.week_day))
+        }))
+        return habitsModified
     })
 
     app.get('/day', async (request) => {
@@ -158,6 +165,37 @@ export async function appRoutes(app: FastifyInstance) {
         `
 
         return summary
+    })
+
+    app.patch('/habits/weekdays', async (request) => {
+        const habitIdParam = z.object({
+            habitId: z.string().uuid(),
+            weekDay: z.number()
+        })
+
+        const { habitId, weekDay } = habitIdParam.parse(request.body)
+        const habitWeekDay = await prisma.habitWeekDay.findFirst({
+            where: {
+                habit_id: habitId,
+                week_day: weekDay
+            }
+        })
+
+        if (!habitWeekDay) {
+            await prisma.habitWeekDay.create({
+                data: {
+                    habit_id: habitId,
+                    week_day: weekDay
+                }
+            })
+        } else {
+            await prisma.habitWeekDay.delete({
+                where: {
+                    id: habitWeekDay.id
+                }
+            })
+        }
+
     })
 }
 
