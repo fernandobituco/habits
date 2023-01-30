@@ -197,5 +197,31 @@ export async function appRoutes(app: FastifyInstance) {
         }
 
     })
+
+    app.delete('/habits', async (request) => {
+        const habitParam = z.object({
+            habitId: z.string()
+        })
+
+        const habitId = habitParam.parse(request.query)
+
+        await prisma.habitWeekDay.deleteMany({
+            where: {
+                habit_id: habitId.habitId
+            }
+        })
+
+        await prisma.dayHabit.deleteMany({
+            where: {
+                habit_id: habitId.habitId
+            }
+        })
+
+        await prisma.habit.delete({
+            where: {
+                id: habitId.habitId
+            }
+        })
+    })
 }
 

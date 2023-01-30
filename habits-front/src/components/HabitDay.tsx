@@ -122,8 +122,6 @@ export function HabitDay({ past, date, amount = 0, defaultCompleted = 0, id = ''
                             )
                         })}
                     </div>
-
-
                     <Popover.Arrow height={8} width={16} className='fill-zinc-900' />
                 </Popover.Content>
             </Popover.Portal>

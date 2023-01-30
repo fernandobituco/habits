@@ -21,6 +21,7 @@ export function NewHabitForm() {
     async function createNewHabit(event: FormEvent) {
         event.preventDefault()
         if (!title || weekDays.length == 0) {
+            alert('O hábito deve conter um título e ao menos um dia da semana deve estar marcado')
             return
         }
 
